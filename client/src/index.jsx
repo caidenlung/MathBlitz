@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./components/App";
-import Skeleton from "./components/pages/Skeleton";
+import Login from "./components/pages/Login";
 import NotFound from "./components/pages/NotFound";
-
+import Home from "./components/pages/Home";
+import "./styles.css";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -19,7 +20,8 @@ const GOOGLE_CLIENT_ID = "927961037884-d14v6erf0d523objjaeqo3e7bahain68.apps.goo
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route errorElement={<NotFound />} element={<App />}>
-      <Route path="/" element={<Skeleton />} />
+      <Route path="/" element={<Login />} />
+      <Route path="/home" element={<Home />} />
     </Route>
   )
 );

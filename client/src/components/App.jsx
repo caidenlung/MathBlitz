@@ -49,7 +49,9 @@ const App = () => {
 
   return (
     <UserContext.Provider value={authContextValue}>
-      <Outlet />
+      <div className="fixed inset-0 w-full h-full bg-black">
+        <Outlet />
+      </div>
     </UserContext.Provider>
   );
 };
