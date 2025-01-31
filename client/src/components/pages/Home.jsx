@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { UserContext } from "../App";
 
 const Home = () => {
-  const { userId, handleLogout } = useContext(UserContext);
+  const { userId, userName, handleLogout } = useContext(UserContext);
   const navigate = useNavigate();
 
   // If not logged in, redirect to login page
@@ -16,6 +16,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen text-white">
+      <h1 className="text-4xl font-bold mb-8">Welcome back, {userName}!</h1>
       <Link to="/play" className="text-4xl font-bold mb-4 hover:text-gray-300">
         Play
       </Link>
