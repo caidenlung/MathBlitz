@@ -4,6 +4,8 @@ import App from "./components/App";
 import Login from "./components/pages/Login";
 import NotFound from "./components/pages/NotFound";
 import Home from "./components/pages/Home";
+import Play from "./components/pages/Play";
+import Settings from "./components/pages/Settings";
 import "./styles.css";
 import {
   createBrowserRouter,
@@ -22,6 +24,8 @@ const router = createBrowserRouter(
     <Route errorElement={<NotFound />} element={<App />}>
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/play" element={<Play />} />
+      <Route path="/settings" element={<Settings />} />
     </Route>
   )
 );

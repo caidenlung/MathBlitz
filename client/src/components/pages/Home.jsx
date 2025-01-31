@@ -16,8 +16,12 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen text-white">
-      <Link className="text-4xl font-bold mb-4">Play</Link>
-      <Link className="text-4xl font-bold mb-4">Settings</Link>
+      <Link to="/play" className="text-4xl font-bold mb-4 hover:text-gray-300">
+        Play
+      </Link>
+      <Link to="/settings" className="text-4xl font-bold mb-4 hover:text-gray-300">
+        Settings
+      </Link>
       <button
         className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
         onClick={() => {
