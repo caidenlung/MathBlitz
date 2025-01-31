@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from "react";
 
-const Timer = () => {
-  const [time, setTime] = useState(120);
+const Timer = ({ onTimeUp }) => {
+  const [time, setTime] = useState(5);
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
     let timer = null;
 
     if (isActive && time > 0) {
-      console.log("Timer starting with time:", time); // Debug log
       timer = setInterval(() => {
         setTime((prevTime) => {
-          if (prevTime <= 0) {
+          const newTime = prevTime - 1;
+          if (newTime === 0) {
             setIsActive(false);
-            return 0;
+            onTimeUp?.();
           }
-          return prevTime - 1;
+          return newTime;
         });
       }, 1000);
     }
 
     return () => {
       if (timer) {
-        console.log("Clearing timer"); // Debug log
         clearInterval(timer);
       }
     };
-  }, [isActive, time]);
+  }, [isActive, time, onTimeUp]);
 
   return (
     <div className="text-center">

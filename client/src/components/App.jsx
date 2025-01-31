@@ -29,10 +29,7 @@ const App = () => {
         setUserName(user.name.split(" ")[0]); // Get only first name
         setFullName(user.name); // Get full name
 
-        // If logged in and not already on home page, redirect to home
-        if (location.pathname !== "/home") {
-          navigate("/home");
-        }
+        // Let the user stay on their current page
       } else if (location.pathname !== "/") {
         // If not logged in and not on login page, redirect to login
         navigate("/");
