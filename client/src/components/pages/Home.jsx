@@ -20,8 +20,8 @@ const Home = () => {
       <Link to="/play" className="text-4xl font-bold mb-4 hover:text-gray-300">
         Play
       </Link>
-      <Link to="/settings" className="text-4xl font-bold mb-4 hover:text-gray-300">
-        Settings
+      <Link to="/stats" className="text-4xl font-bold mb-4 hover:text-gray-300">
+        Stats
       </Link>
       <button
         className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"

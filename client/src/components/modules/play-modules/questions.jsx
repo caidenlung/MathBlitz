@@ -10,22 +10,31 @@ const Questions = ({ onCorrectAnswer }) => {
     const operation = operations[Math.floor(Math.random() * operations.length)];
     let num1, num2;
 
+    // Helper functions for random number generation
+    const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    // From 2-100
+    const getRandomLargeNumber = () => getRandomNumber(2, 100);
+    // From 2-12
+    const getRandomSmallNumber = () => getRandomNumber(2, 12);
+
     switch (operation) {
       case "+":
-        num1 = Math.floor(Math.random() * 100);
-        num2 = Math.floor(Math.random() * 100);
+        num1 = getRandomLargeNumber();
+        num2 = getRandomLargeNumber();
         break;
       case "-":
-        num1 = Math.floor(Math.random() * 100);
-        num2 = Math.floor(Math.random() * (num1 + 1)); // Ensure positive result
+        num1 = getRandomLargeNumber();
+        num2 = Math.floor(Math.random() * (num1 - 2)) + 2;
         break;
       case "*":
-        num1 = Math.floor(Math.random() * 12);
-        num2 = Math.floor(Math.random() * 12);
+        num1 = getRandomSmallNumber();
+        num2 = getRandomLargeNumber();
         break;
       case "/":
-        num2 = Math.floor(Math.random() * 11) + 1;
-        num1 = num2 * Math.floor(Math.random() * 12);
+        // For division, ensure we get whole number results
+        num2 = getRandomSmallNumber(); // divisor between 2-12
+        const multiplier = getRandomLargeNumber(); // temporary number to ensure clean division
+        num1 = num2 * multiplier; // this ensures num1 is divisible by num2
         break;
     }
     return {

@@ -43,10 +43,11 @@ const App = () => {
   const handleLogin = (credentialResponse) => {
     const userToken = credentialResponse.credential;
     const decodedCredential = jwt_decode(userToken);
-    console.log(`Logged in as ${firstName}`);
+    console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
-      setUserName(userName);
+      setUserName(user.name.split(" ")[0]); // Get first name
+      setFullName(user.name); // Set full name
       navigate("/home");
       post("/api/initsocket", { socketid: socket.id });
     });
