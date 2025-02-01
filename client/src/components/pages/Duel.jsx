@@ -6,7 +6,7 @@ const Duel = () => {
 
   return (
     <div className="min-h-screen text-zinc-200 flex items-center justify-center">
-      <div className="max-w-xl w-full px-6 flex flex-col items-center">
+      <div className="max-w-xl w-full px-6 -mt-20 flex flex-col items-center">
         <div className="text-center w-full space-y-16">
           <button
             onClick={() => navigate("/")}
