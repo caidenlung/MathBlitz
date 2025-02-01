@@ -3,11 +3,12 @@ import Questions from "../modules/play-modules/Questions";
 import Scores from "../modules/play-modules/Scores";
 import Timer from "../modules/play-modules/Timer";
 import FinalScore from "../modules/play-modules/FinalScore";
-import { post } from "../../utilities";
+import { useNavigate } from "react-router-dom";
 
 const Play = () => {
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
+  const navigate = useNavigate();
 
   const handleCorrectAnswer = () => {
     setScore(score + 1);
@@ -15,25 +16,31 @@ const Play = () => {
 
   const handleTimeUp = () => {
     setIsGameOver(true);
-    // Send scores to backend when game is over
-    post("/api/score", { score: score }).then((user) => console.log("score saved successfully"));
+  };
+
+  const handleBackToHome = () => {
+    navigate("/");
   };
 
   return (
-    <div className="relative h-screen bg-black">
-      {!isGameOver && (
-        <>
-          <div className="absolute top-4 right-4">
-            <Scores score={score} />
-          </div>
-          <div className="absolute top-4 left-4">
-            <Timer onTimeUp={handleTimeUp} />
-          </div>
-        </>
-      )}
-      <div className="flex items-center justify-center h-full">
+    <div className="min-h-screen bg-zinc-900 text-zinc-200">
+      <div className="w-full max-w-7xl mx-auto px-12 pt-16">
         {!isGameOver ? (
-          <Questions onCorrectAnswer={handleCorrectAnswer} />
+          <div className="flex flex-col items-center">
+            <div className="w-full flex justify-between mb-32">
+              <Timer onTimeUp={handleTimeUp} />
+              <button
+                onClick={handleBackToHome}
+                className="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded transition-all duration-200"
+              >
+                back to home
+              </button>
+              <Scores score={score} />
+            </div>
+            <div className="w-full max-w-2xl">
+              <Questions onCorrectAnswer={handleCorrectAnswer} />
+            </div>
+          </div>
         ) : (
           <FinalScore score={score} />
         )}

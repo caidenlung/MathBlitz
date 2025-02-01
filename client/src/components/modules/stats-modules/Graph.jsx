@@ -32,14 +32,17 @@ const Graph = () => {
   };
 
   const data = {
-    labels: scores.map((_, index) => `Game ${index + 1}`),
+    labels: scores.map((_, index) => `${index + 1}`),
     datasets: [
       {
-        label: "Score History",
+        label: "score",
         data: scores,
         fill: false,
-        borderColor: "rgb(75, 192, 192)",
+        borderColor: "rgb(52, 211, 153)",
+        backgroundColor: "rgba(52, 211, 153, 0.1)",
         tension: 0.1,
+        pointRadius: 4,
+        pointHoverRadius: 6,
       },
     ],
   };
@@ -50,15 +53,20 @@ const Graph = () => {
       legend: {
         position: "top",
         labels: {
-          color: "white",
+          color: "rgb(161, 161, 170)",
+          font: {
+            family: "monospace",
+          },
         },
       },
       title: {
         display: true,
-        text: "Your Score History",
-        color: "white",
+        text: "score history",
+        color: "rgb(161, 161, 170)",
         font: {
-          size: 16,
+          size: 14,
+          family: "monospace",
+          weight: "500",
         },
       },
     },
@@ -67,14 +75,21 @@ const Graph = () => {
         beginAtZero: true,
         title: {
           display: true,
-          text: "Scores",
-          color: "white",
+          text: "scores",
+          color: "rgb(161, 161, 170)",
+          font: {
+            family: "monospace",
+          },
         },
         grid: {
-          color: "rgba(255, 255, 255, 0.1)",
+          color: "rgba(161, 161, 170, 0.1)",
+          borderColor: "rgb(63, 63, 70)",
         },
         ticks: {
-          color: "white",
+          color: "rgb(161, 161, 170)",
+          font: {
+            family: "monospace",
+          },
           stepSize: 1,
           precision: 0,
         },
@@ -82,14 +97,21 @@ const Graph = () => {
       x: {
         title: {
           display: true,
-          text: "Game Number",
-          color: "white",
+          text: "game number",
+          color: "rgb(161, 161, 170)",
+          font: {
+            family: "monospace",
+          },
         },
         grid: {
-          color: "rgba(255, 255, 255, 0.1)",
+          color: "rgba(161, 161, 170, 0.1)",
+          borderColor: "rgb(63, 63, 70)",
         },
         ticks: {
-          color: "white",
+          color: "rgb(161, 161, 170)",
+          font: {
+            family: "monospace",
+          },
         },
       },
     },

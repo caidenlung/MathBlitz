@@ -1,10 +1,33 @@
 import Graph from "../modules/stats-modules/Graph";
+import HighScore from "../modules/stats-modules/HighScore";
+import MeanScore from "../modules/stats-modules/MeanScore";
+import { useNavigate } from "react-router-dom";
 
 const Stats = () => {
+  const navigate = useNavigate();
+
+  const handleBackToHome = () => {
+    navigate("/");
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
-      <div className="w-full max-w-4xl px-10 -mt-20">
-        <Graph />
+    <div className="min-h-screen bg-zinc-900 text-zinc-200">
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="flex justify-between items-center mb-16">
+          <div className="flex gap-8">
+            <HighScore />
+            <MeanScore />
+          </div>
+          <button
+            onClick={handleBackToHome}
+            className="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded transition-all duration-200"
+          >
+            back to home
+          </button>
+        </div>
+        <div className="bg-zinc-800/50 rounded-lg p-8 border border-zinc-700">
+          <Graph />
+        </div>
       </div>
     </div>
   );

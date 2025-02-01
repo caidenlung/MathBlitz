@@ -1,56 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { get } from "../../../utilities";
+import { post } from "../../../utilities";
 
 const FinalScore = ({ score }) => {
   const navigate = useNavigate();
-  const [highScore, setHighScore] = useState(0);
 
-  useEffect(() => {
-    getScores();
-  }, []);
+  React.useEffect(() => {
+    post("/api/score", { score: score }).then(() => console.log("score saved successfully"));
+  }, [score]);
 
   const handlePlayAgain = () => {
     window.location.reload();
   };
 
   const handleHome = () => {
-    navigate("/"); // Navigate to home page
-  };
-
-  const getScores = async () => {
-    try {
-      const response = await get("/api/scores");
-      const userScores = response.scores;
-      const newHighScore = Math.max(...userScores, score);
-      setHighScore(newHighScore);
-    } catch (err) {
-      error.log("Failed to get scores:", err);
-    }
+    navigate("/");
   };
 
   return (
-    <div>
-      <div className="text-3xl space-y-8 flex flex-col items-center justify-center h-screen text-white">
-        <h1>Game Over!</h1>
-        <div>Final Score: {score}</div>
-        <div>Your High Score: {highScore} </div>
-        <div className="space-x-8">
-          <button
-            onClick={handlePlayAgain}
-            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg transition colors"
-          >
-            Play Again
-          </button>
-          <button
-            onClick={handleHome}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition colors"
-          >
-            Home
-          </button>
-        </div>
+    <div className="flex flex-col items-center justify-center space-y-12 py-24">
+      <div className="bg-zinc-800/50 rounded-lg p-8 border border-zinc-700 text-center">
+        <p className="text-sm font-medium text-zinc-400 mb-3">final score</p>
+        <p className="text-6xl font-mono text-emerald-400 mb-6">{score}</p>
+        <div className="text-sm text-zinc-400 font-mono">score saved</div>
+      </div>
+
+      <div className="flex gap-6">
+        <button
+          onClick={handlePlayAgain}
+          className="px-8 py-4 text-sm font-medium text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded transition-all duration-200"
+        >
+          play again
+        </button>
+        <button
+          onClick={handleHome}
+          className="px-8 py-4 text-sm font-medium text-emerald-400 hover:text-emerald-300 border border-emerald-800/50 hover:border-emerald-700 rounded transition-all duration-200"
+        >
+          home
+        </button>
       </div>
     </div>
   );
 };
+
 export default FinalScore;

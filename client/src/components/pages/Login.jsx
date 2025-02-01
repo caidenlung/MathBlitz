@@ -16,29 +16,37 @@ const Login = () => {
   }, [userId, navigate]);
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
+    <div className="min-h-screen bg-zinc-900 flex flex-col items-center justify-center px-4">
       {userId ? (
         <button
           onClick={() => {
             googleLogout();
             handleLogout();
           }}
+          className="px-8 py-4 text-sm font-medium text-emerald-400 hover:text-emerald-300 border border-emerald-800/50 hover:border-emerald-700 rounded transition-all duration-200"
         >
           Logout
         </button>
       ) : (
-        <div className="space-y-8">
-          <div className="text-white text-center">
-            <h1 className="text-4xl font-bold mb-4"> Welcome to MathBlitz!</h1>
+        <div className="space-y-12 -mt-32">
+          <div className="text-center">
+            <h1 className="text-6xl font-bold text-emerald-400 mb-4">mathblitz</h1>
+            <p className="text-zinc-400 text-lg">improve your mental math skills</p>
           </div>
-          <div className="flex justify-center">
-            <GoogleLogin
-              onSuccess={(credentialResponse) => {
-                handleLogin(credentialResponse);
-                navigate("/home");
-              }}
-              onError={(err) => console.log(err)}
-            />
+          <div className="bg-zinc-800/50 rounded-lg px-10 py-8 border border-zinc-700">
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  handleLogin(credentialResponse);
+                  navigate("/home");
+                }}
+                onError={(err) => console.log(err)}
+                theme="filled_black"
+                shape="pill"
+                size="large"
+                text="continue_with"
+              />
+            </div>
           </div>
         </div>
       )}
