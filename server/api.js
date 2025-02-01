@@ -43,6 +43,26 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
+// Handle Scores submissions
+router.post("/score", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.user._id).then((user) => {
+    user.scores.push(req.body.score);
+    user.save().then((savedUser) => {
+      res.send(savedUser);
+    });
+  });
+});
+
+// Send all scores of the user
+router.get("/scores", auth.ensureLoggedIn, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    res.send({ scores: user.scores });
+  } catch (err) {
+    console.log(`Failed to get scores: ${err}`);
+    res.status(500).send({ error: "Failed to get scores" });
+  }
+});
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

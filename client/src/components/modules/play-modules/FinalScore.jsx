@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { get } from "../../../utilities";
+
 const FinalScore = ({ score }) => {
   const navigate = useNavigate();
+  const [highScore, setHighScore] = useState(0);
+
+  useEffect(() => {
+    getScores();
+  }, []);
 
   const handlePlayAgain = () => {
     window.location.reload();
@@ -11,11 +18,23 @@ const FinalScore = ({ score }) => {
     navigate("/"); // Navigate to home page
   };
 
+  const getScores = async () => {
+    try {
+      const response = await get("/api/scores");
+      const userScores = response.scores;
+      const newHighScore = Math.max(...userScores, score);
+      setHighScore(newHighScore);
+    } catch (err) {
+      error.log("Failed to get scores:", err);
+    }
+  };
+
   return (
     <div>
       <div className="text-3xl space-y-8 flex flex-col items-center justify-center h-screen text-white">
+        <h1>Game Over!</h1>
         <div>Final Score: {score}</div>
-        <div>Your High Score:</div>
+        <div>Your High Score: {highScore} </div>
         <div className="space-x-8">
           <button
             onClick={handlePlayAgain}

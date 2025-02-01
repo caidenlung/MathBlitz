@@ -3,6 +3,7 @@ import Questions from "../modules/play-modules/Questions";
 import Scores from "../modules/play-modules/Scores";
 import Timer from "../modules/play-modules/Timer";
 import FinalScore from "../modules/play-modules/FinalScore";
+import { post } from "../../utilities";
 
 const Play = () => {
   const [score, setScore] = useState(0);
@@ -14,6 +15,8 @@ const Play = () => {
 
   const handleTimeUp = () => {
     setIsGameOver(true);
+    // Send scores to backend when game is over
+    post("/api/score", { score: score }).then((user) => console.log("score saved successfully"));
   };
 
   return (

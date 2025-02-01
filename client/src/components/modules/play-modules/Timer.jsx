@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const Timer = ({ onTimeUp }) => {
-  const [time, setTime] = useState(5);
+  const [time, setTime] = useState(10);
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
