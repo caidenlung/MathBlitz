@@ -8,6 +8,9 @@ import Play from "./components/pages/Play";
 import Stats from "./components/pages/Stats";
 import Leaderboard from "./components/pages/Leaderboard";
 import Duel from "./components/pages/Duel";
+import CreateDuel from "./components/modules/duel-modules/CreateDuel";
+import JoinDuel from "./components/modules/duel-modules/JoinDuel";
+
 import "./styles.css";
 import {
   createBrowserRouter,
@@ -30,6 +33,8 @@ const router = createBrowserRouter(
       <Route path="/stats" element={<Stats />} />
       <Route path="/leaderboard" element={<Leaderboard />} />
       <Route path="/duel" element={<Duel />} />
+      <Route path="/createduel" element={<CreateDuel />} />
+      <Route path="/joinduel" element={<JoinDuel />} />
     </Route>
   )
 );
