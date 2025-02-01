@@ -37,6 +37,12 @@ const Home = () => {
               view stats
             </button>
             <button
+              onClick={() => navigate("/leaderboard")}
+              className="w-full px-6 py-5 text-sm font-medium text-yellow-400/80 hover:text-yellow-300 border border-yellow-400/50 hover:border-yellow-400 rounded transition-all duration-200"
+            >
+              view leaderboard
+            </button>
+            <button
               onClick={() => {
                 handleLogout();
                 navigate("/");

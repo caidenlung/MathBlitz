@@ -1,10 +1,19 @@
+import React, { useContext, useEffect } from "react";
 import Graph from "../modules/stats-modules/Graph";
 import HighScore from "../modules/stats-modules/HighScore";
 import MeanScore from "../modules/stats-modules/MeanScore";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../App";
 
 const Stats = () => {
   const navigate = useNavigate();
+  const { userId } = useContext(UserContext);
+
+  useEffect(() => {
+    if (!userId) {
+      navigate("/");
+    }
+  }, [userId, navigate]);
 
   const handleBackToHome = () => {
     navigate("/");

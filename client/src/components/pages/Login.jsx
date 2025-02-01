@@ -31,7 +31,7 @@ const Login = () => {
         <div className="space-y-12 -mt-32">
           <div className="text-center">
             <h1 className="text-6xl font-bold text-emerald-400 mb-4">mathblitz</h1>
-            <p className="text-zinc-400 text-lg">improve your mental math skills</p>
+            <p className="text-zinc-400 text-lg">login to continue</p>
           </div>
           <div className="bg-zinc-800/50 rounded-lg px-10 py-8 border border-zinc-700">
             <div className="flex justify-center">
