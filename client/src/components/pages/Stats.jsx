@@ -20,7 +20,7 @@ const Stats = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-zinc-200">
+    <div className="min-h-screen text-zinc-200">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="flex justify-between items-center mb-16">
           <div className="flex gap-8">

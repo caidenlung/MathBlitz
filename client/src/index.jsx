@@ -7,6 +7,7 @@ import Home from "./components/pages/Home";
 import Play from "./components/pages/Play";
 import Stats from "./components/pages/Stats";
 import Leaderboard from "./components/pages/Leaderboard";
+import Duel from "./components/pages/Duel";
 import "./styles.css";
 import {
   createBrowserRouter,
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
       <Route path="/play" element={<Play />} />
       <Route path="/stats" element={<Stats />} />
       <Route path="/leaderboard" element={<Leaderboard />} />
+      <Route path="/duel" element={<Duel />} />
     </Route>
   )
 );

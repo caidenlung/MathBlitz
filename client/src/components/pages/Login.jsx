@@ -16,7 +16,7 @@ const Login = () => {
   }, [userId, navigate]);
 
   return (
-    <div className="min-h-screen bg-zinc-900 flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4">
       {userId ? (
         <button
           onClick={() => {

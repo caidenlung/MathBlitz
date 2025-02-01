@@ -25,10 +25,10 @@ const Leaderboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-zinc-900 flex flex-col items-center pt-16 px-4">
+    <div className="min-h-screen flex flex-col items-center pt-16 px-4">
       <div className="w-full max-w-2xl">
         <div className="flex justify-between items-center mb-12">
-          <h1 className="text-4xl font-bold text-yellow-400/90">leaderboard</h1>
+          <h1 className="text-4xl font-bold text-yellow-400">leaderboard</h1>
           <button
             onClick={() => navigate("/")}
             className="px-6 py-3 text-sm font-medium text-yellow-400/80 hover:text-yellow-300 border border-yellow-400/50 hover:border-yellow-400 rounded transition-all duration-200"
@@ -56,7 +56,7 @@ const Leaderboard = () => {
                   <div className="col-span-7 font-medium text-zinc-300">
                     {score.name}
                   </div>
-                  <div className="col-span-3 text-right font-mono text-yellow-400/90">
+                  <div className="col-span-3 text-right font-mono text-yellow-400">
                     {score.score}
                   </div>
                 </div>

@@ -23,7 +23,7 @@ const Play = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-zinc-200">
+    <div className="min-h-screen text-zinc-200">
       <div className="w-full max-w-7xl mx-auto px-12 pt-16">
         {!isGameOver ? (
           <div className="flex flex-col items-center">

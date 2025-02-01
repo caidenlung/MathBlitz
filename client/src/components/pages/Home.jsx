@@ -15,7 +15,7 @@ const Home = () => {
   }, [userId, navigate]);
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-zinc-200 flex items-center justify-center">
+    <div className="min-h-screen text-zinc-200 flex items-center justify-center">
       <div className="max-w-xl w-full px-6">
         <div className="text-center space-y-16">
           <div className="space-y-5">
@@ -31,6 +31,12 @@ const Home = () => {
               start game
             </button>
             <button
+              onClick={() => navigate("/duel")}
+              className="w-full px-6 py-5 text-sm font-medium text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded transition-all duration-200"
+            >
+              duel
+            </button>
+            <button
               onClick={() => navigate("/stats")}
               className="w-full px-6 py-5 text-sm font-medium text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded transition-all duration-200"
             >
@@ -38,7 +44,7 @@ const Home = () => {
             </button>
             <button
               onClick={() => navigate("/leaderboard")}
-              className="w-full px-6 py-5 text-sm font-medium text-yellow-400/80 hover:text-yellow-300 border border-yellow-400/50 hover:border-yellow-400 rounded transition-all duration-200"
+              className="w-full px-6 py-5 text-sm font-medium text-yellow-400/80 hover:text-yellow-300 border border-yellow-400/30 hover:border-yellow-400/50 rounded transition-all duration-200"
             >
               view leaderboard
             </button>
