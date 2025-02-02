@@ -18,18 +18,18 @@ const CreateDuel = () => {
       setDuel(duel);
       setPlayers([
         { id: duel.host._id, name: duel.host.name, isHost: true },
-        { id: duel.opponent._id, name: duel.opponent.name, isHost: false }
+        { id: duel.opponent._id, name: duel.opponent.name, isHost: false },
       ]);
     });
 
     // Listen for duel start
     socket.on("duel_started", ({ duel, startTime, duration }) => {
-      navigate("/duelplay", { 
-        state: { 
+      navigate("/duelplay", {
+        state: {
           duel,
           startTime: new Date(startTime),
-          duration
-        } 
+          duration,
+        },
       });
     });
 
@@ -42,20 +42,27 @@ const CreateDuel = () => {
   const handleCreateLobby = async () => {
     try {
       setError("");
+
+      // Validate duration before creating lobby
+      if (duration < 30 || duration > 300) {
+        setError("Duration must be between 30 and 300 seconds");
+        return;
+      }
+
       const response = await fetch("/api/duel/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ duration }),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to create duel");
       }
-      
+
       const data = await response.json();
       console.log("Created duel:", data);
-      
+
       setDuel(data.duel);
       setLobbyCode(data.duel.code);
       setIsLobbyCreated(true);
@@ -76,7 +83,7 @@ const CreateDuel = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to start duel");
@@ -108,17 +115,11 @@ const CreateDuel = () => {
               <input
                 type="number"
                 value={duration}
-                onChange={(e) =>
-                  setDuration(Math.max(30, Math.min(300, parseInt(e.target.value) || 30)))
-                }
+                onChange={(e) => setDuration(parseInt(e.target.value) || 0)}
                 className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded text-center text-zinc-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                min="30"
-                max="300"
               />
               <p className="text-xs text-zinc-400">min: 30s, max: 300s</p>
-              {error && (
-                <p className="text-sm text-red-400 mt-2">{error}</p>
-              )}
+              {error && <p className="text-sm text-red-400 mt-2">{error}</p>}
             </div>
 
             {!isLobbyCreated ? (

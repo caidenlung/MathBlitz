@@ -4,28 +4,31 @@ const Timer = ({ onTimeUp, timeLeft: propTimeLeft }) => {
   const [time, setTime] = useState(propTimeLeft || 120);
   const [isActive, setIsActive] = useState(true);
 
+  // Initialize timer when propTimeLeft changes
   useEffect(() => {
     if (propTimeLeft !== undefined) {
       setTime(propTimeLeft);
-      if (propTimeLeft <= 0) {
-        setIsActive(false);
-        onTimeUp?.();
-      }
+      setIsActive(true);
     }
-  }, [propTimeLeft, onTimeUp]);
+  }, [propTimeLeft]);
 
+  // Handle countdown
   useEffect(() => {
     let interval = null;
-    if (isActive && time > 0 && propTimeLeft === undefined) {
+    if (isActive && time > 0) {
       interval = setInterval(() => {
-        setTime((time) => time - 1);
+        setTime((prevTime) => {
+          const newTime = prevTime - 1;
+          if (newTime === 0) {
+            setIsActive(false);
+            onTimeUp?.();
+          }
+          return newTime;
+        });
       }, 1000);
-    } else if (time === 0) {
-      setIsActive(false);
-      onTimeUp?.();
     }
     return () => clearInterval(interval);
-  }, [isActive, time, onTimeUp, propTimeLeft]);
+  }, [isActive, onTimeUp]);
 
   return (
     <div className="bg-zinc-800/50 rounded-lg px-10 py-4 border border-zinc-700 min-w-[160px]">

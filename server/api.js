@@ -107,15 +107,27 @@ router.get("/scores", auth.ensureLoggedIn, (req, res) => {
 // Create a new duel
 router.post("/duel/create", auth.ensureLoggedIn, async (req, res) => {
   try {
+    const duration = parseInt(req.body.duration);
+    
+    // Validate duration
+    if (isNaN(duration) || duration < 30 || duration > 300) {
+      return res.status(400).send({ error: "Duration must be between 30 and 300 seconds" });
+    }
+    
     const code = Math.random().toString(36).substring(2, 8).toUpperCase();
     const duel = new Duel({
       code: code,
       host: req.user._id,
-      duration: req.body.duration || 120,
+      duration: duration,
     });
+    
     await duel.save();
+    await duel.populate("host", "name");
+    
+    console.log("Created duel with duration:", duration);
     res.send({ duel });
   } catch (err) {
+    console.error("Error creating duel:", err);
     res.status(500).send({ error: "Could not create duel" });
   }
 });
@@ -132,6 +144,17 @@ router.post("/duel/join", auth.ensureLoggedIn, async (req, res) => {
       console.log("Duel not found or already started");
       return res.status(404).send({ error: "Duel not found or already started" });
     }
+
+    // Check if user is already the host
+    if (duel.host && duel.host._id.toString() === req.user._id.toString()) {
+      return res.status(400).send({ error: "You cannot join your own duel" });
+    }
+
+    // Check if duel already has an opponent
+    if (duel.opponent) {
+      return res.status(400).send({ error: "Duel is already full" });
+    }
+
     console.log("Found duel:", duel);
 
     duel.opponent = req.user._id;
@@ -140,16 +163,28 @@ router.post("/duel/join", auth.ensureLoggedIn, async (req, res) => {
 
     console.log("Updated duel:", duel);
 
-    // Notify host that opponent joined
-    socketManager.getIo().to(duel.code).emit("opponent_joined", {
-      duel,
-      opponentName: req.user.name,
-    });
+    // Make sure the joining player is in the socket room
+    const socket = socketManager.getSocketFromUserID(req.user._id);
+    if (socket) {
+      socket.join(duel.code);
+    }
+
+    // Get host's socket and notify them
+    const hostSocket = socketManager.getSocketFromUserID(duel.host._id);
+    if (hostSocket) {
+      // Emit directly to the host socket
+      hostSocket.emit("opponent_joined", {
+        duel,
+        opponentName: req.user.name,
+      });
+    } else {
+      console.log("Warning: Could not find socket for host", duel.host._id);
+    }
 
     res.send({ duel });
-  } catch (err) {
-    console.error("Error joining duel:", err);
-    res.status(500).send({ error: "Could not join duel" });
+  } catch (error) {
+    console.error("Error joining duel:", error);
+    res.status(500).send({ error: "Failed to join duel" });
   }
 });
 
@@ -161,35 +196,91 @@ router.post("/duel/:code/start", auth.ensureLoggedIn, async (req, res) => {
       .populate("opponent", "name");
 
     if (!duel) {
+      console.log("Duel not found with code:", req.params.code);
       return res.status(404).send({ error: "Duel not found" });
     }
 
-    // Verify that the requester is the host
-    if (!duel.host._id.equals(req.user._id)) {
+    // Verify user is host
+    if (duel.host._id.toString() !== req.user._id.toString()) {
       return res.status(403).send({ error: "Only the host can start the duel" });
     }
 
-    // Verify that there is an opponent
-    if (!duel.opponent) {
-      return res.status(400).send({ error: "Cannot start duel without an opponent" });
+    // Get socket IDs for both players
+    const hostSocket = socketManager.getSocketFromUserID(duel.host._id);
+    const opponentSocket = socketManager.getSocketFromUserID(duel.opponent._id);
+
+    if (!hostSocket || !opponentSocket) {
+      return res.status(400).send({ error: "Both players must be connected" });
+    }
+
+    // Add socket IDs to the duel object for client-side identification
+    duel.host.socketId = hostSocket.id;
+    duel.opponent.socketId = opponentSocket.id;
+
+    // Generate questions if not already generated
+    if (!duel.questions || duel.questions.length === 0) {
+      const questions = [];
+      // Custom random number generator with seed
+      let seedValue = Date.now();
+      const seededRandom = () => {
+        seedValue = (seedValue * 9301 + 49297) % 233280;
+        return seedValue / 233280;
+      };
+      
+      const getRandomNumber = (min, max) => Math.floor(seededRandom() * (max - min + 1)) + min;
+      const getRandomLargeNumber = () => getRandomNumber(2, 100);
+      const getRandomSmallNumber = () => getRandomNumber(2, 12);
+      const operations = ["+", "-", "*", "/"];
+
+      // Generate 500 questions (players likely won't get through all of them)
+      for (let i = 0; i < 500; i++) {
+        const operation = operations[Math.floor(seededRandom() * operations.length)];
+        let num1, num2, answer;
+
+        switch (operation) {
+          case "+":
+            num1 = getRandomLargeNumber();
+            num2 = getRandomLargeNumber();
+            answer = num1 + num2;
+            break;
+          case "-":
+            num1 = getRandomLargeNumber();
+            num2 = Math.floor(seededRandom() * (num1 - 2)) + 2;
+            answer = num1 - num2;
+            break;
+          case "*":
+            num1 = getRandomSmallNumber();
+            num2 = getRandomLargeNumber();
+            answer = num1 * num2;
+            break;
+          case "/":
+            num2 = getRandomSmallNumber();
+            const multiplier = getRandomLargeNumber();
+            num1 = num2 * multiplier;
+            answer = num1 / num2;
+            break;
+        }
+
+        questions.push({
+          question: `${num1} ${operation === "/" ? "÷" : operation === "*" ? "×" : operation} ${num2}`,
+          answer: answer,
+        });
+      }
+      duel.questions = questions;
+      await duel.save();
     }
 
     duel.status = "in_progress";
-    duel.startedAt = new Date();
     await duel.save();
 
-    // Emit start event with start time and duration
+    const startTime = new Date();
     socketManager.getIo().to(duel.code).emit("duel_started", {
       duel,
-      startTime: duel.startedAt,
+      startTime,
       duration: duel.duration,
     });
 
-    res.send({
-      duel,
-      startTime: duel.startedAt,
-      duration: duel.duration,
-    });
+    res.send({ success: true });
   } catch (err) {
     console.error("Error starting duel:", err);
     res.status(500).send({ error: "Could not start duel" });
@@ -219,9 +310,9 @@ router.post("/duel/:code/score", auth.ensureLoggedIn, async (req, res) => {
       return res.status(404).send({ error: "Duel not found" });
     }
 
-    if (req.user._id.equals(duel.host)) {
+    if (duel.host.equals(req.user._id)) {
       duel.hostScore = req.body.score;
-    } else if (req.user._id.equals(duel.opponent)) {
+    } else if (duel.opponent.equals(req.user._id)) {
       duel.opponentScore = req.body.score;
     }
     if (duel.hostScore > 0 && duel.opponentScore > 0) {
