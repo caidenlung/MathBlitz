@@ -108,22 +108,22 @@ router.get("/scores", auth.ensureLoggedIn, (req, res) => {
 router.post("/duel/create", auth.ensureLoggedIn, async (req, res) => {
   try {
     const duration = parseInt(req.body.duration);
-    
+
     // Validate duration
     if (isNaN(duration) || duration < 30 || duration > 300) {
       return res.status(400).send({ error: "Duration must be between 30 and 300 seconds" });
     }
-    
+
     const code = Math.random().toString(36).substring(2, 8).toUpperCase();
     const duel = new Duel({
       code: code,
       host: req.user._id,
       duration: duration,
     });
-    
+
     await duel.save();
     await duel.populate("host", "name");
-    
+
     console.log("Created duel with duration:", duration);
     res.send({ duel });
   } catch (err) {
@@ -226,7 +226,7 @@ router.post("/duel/:code/start", auth.ensureLoggedIn, async (req, res) => {
         seedValue = (seedValue * 9301 + 49297) % 233280;
         return seedValue / 233280;
       };
-      
+
       const getRandomNumber = (min, max) => Math.floor(seededRandom() * (max - min + 1)) + min;
       const getRandomLargeNumber = () => getRandomNumber(2, 100);
       const getRandomSmallNumber = () => getRandomNumber(2, 12);
@@ -262,7 +262,9 @@ router.post("/duel/:code/start", auth.ensureLoggedIn, async (req, res) => {
         }
 
         questions.push({
-          question: `${num1} ${operation === "/" ? "÷" : operation === "*" ? "×" : operation} ${num2}`,
+          question: `${num1} ${
+            operation === "/" ? "÷" : operation === "*" ? "×" : operation
+          } ${num2}`,
           answer: answer,
         });
       }

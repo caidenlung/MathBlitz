@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Graph from "../modules/stats-modules/Graph";
 import HighScore from "../modules/stats-modules/HighScore";
 import MeanScore from "../modules/stats-modules/MeanScore";
+import GamesPlayed from "../modules/stats-modules/GamesPlayed";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 
@@ -26,6 +27,7 @@ const Stats = () => {
           <div className="flex gap-8">
             <HighScore />
             <MeanScore />
+            <GamesPlayed />
           </div>
           <button
             onClick={handleBackToHome}
