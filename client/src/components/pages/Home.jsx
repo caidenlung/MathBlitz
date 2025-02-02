@@ -21,7 +21,7 @@ const Home = () => {
       <div className="max-w-xl w-full px-6">
         <div className="text-center space-y-16">
           <div className="space-y-5">
-            <h1 className="text-6xl font-mono tracking-tight text-emerald-400">mathblitz</h1>
+            <h1 className="text-6xl font-mono tracking-tight text-emerald-400">beavermath</h1>
             <p className="text-zinc-400 font-mono">test your math skills</p>
           </div>
 

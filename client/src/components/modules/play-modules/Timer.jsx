@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from "react";
 
-const Timer = ({ onTimeUp }) => {
-  const [time, setTime] = useState(120);
+const Timer = ({ onTimeUp, timeLeft: propTimeLeft }) => {
+  const [time, setTime] = useState(propTimeLeft || 120);
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
+    if (propTimeLeft !== undefined) {
+      setTime(propTimeLeft);
+      if (propTimeLeft <= 0) {
+        setIsActive(false);
+        onTimeUp?.();
+      }
+    }
+  }, [propTimeLeft, onTimeUp]);
+
+  useEffect(() => {
     let interval = null;
-    if (isActive && time > 0) {
+    if (isActive && time > 0 && propTimeLeft === undefined) {
       interval = setInterval(() => {
         setTime((time) => time - 1);
       }, 1000);
     } else if (time === 0) {
       setIsActive(false);
-      onTimeUp();
+      onTimeUp?.();
     }
     return () => clearInterval(interval);
-  }, [isActive, time, onTimeUp]);
+  }, [isActive, time, onTimeUp, propTimeLeft]);
 
   return (
     <div className="bg-zinc-800/50 rounded-lg px-10 py-4 border border-zinc-700 min-w-[160px]">

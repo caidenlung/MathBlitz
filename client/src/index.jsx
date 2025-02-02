@@ -10,7 +10,7 @@ import Leaderboard from "./components/pages/Leaderboard";
 import Duel from "./components/pages/Duel";
 import CreateDuel from "./components/modules/duel-modules/CreateDuel";
 import JoinDuel from "./components/modules/duel-modules/JoinDuel";
-
+import DuelPlay from "./components/modules/duel-modules/DuelPlay";
 import "./styles.css";
 import {
   createBrowserRouter,
@@ -35,6 +35,7 @@ const router = createBrowserRouter(
       <Route path="/duel" element={<Duel />} />
       <Route path="/createduel" element={<CreateDuel />} />
       <Route path="/joinduel" element={<JoinDuel />} />
+      <Route path="/duelplay" element={<DuelPlay />} />
     </Route>
   )
 );

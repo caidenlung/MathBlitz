@@ -36,6 +36,17 @@ module.exports = {
         const user = getUserFromSocketID(socket.id);
         removeUser(user, socket);
       });
+      socket.on("join_duel", (duelCode) => {
+        socket.join(duelCode);
+      });
+
+      socket.on("leave_duel", (duelCode) => {
+        socket.leave(duelCode);
+      });
+
+      socket.on("duel_update", (data) => {
+        io.to(data.duelCode).emit("duel_state_update", data);
+      });
     });
   },
 
