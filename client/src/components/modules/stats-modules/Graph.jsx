@@ -35,14 +35,20 @@ const Graph = () => {
     labels: scores.map((_, index) => `${index + 1}`),
     datasets: [
       {
-        label: "score",
+        label: "Score",
         data: scores,
         fill: false,
         borderColor: "rgb(52, 211, 153)",
         backgroundColor: "rgba(52, 211, 153, 0.1)",
         tension: 0.1,
-        pointRadius: 4,
-        pointHoverRadius: 6,
+        pointRadius: 5,
+        pointHoverRadius: 8,
+        pointBackgroundColor: "rgb(52, 211, 153)",
+        pointHoverBackgroundColor: "rgb(52, 211, 153)",
+        pointBorderColor: "rgb(24, 24, 27)",
+        pointHoverBorderColor: "rgb(24, 24, 27)",
+        pointBorderWidth: 2,
+        pointHoverBorderWidth: 3,
       },
     ],
   };
@@ -67,6 +73,27 @@ const Graph = () => {
           size: 14,
           family: "monospace",
           weight: "500",
+        },
+      },
+      tooltip: {
+        backgroundColor: "rgb(39, 39, 42)",
+        titleColor: "rgb(161, 161, 170)",
+        bodyColor: "rgb(52, 211, 153)",
+        titleFont: {
+          family: "monospace",
+          size: 12,
+        },
+        bodyFont: {
+          family: "monospace",
+          size: 14,
+          weight: "bold",
+        },
+        padding: 12,
+        cornerRadius: 8,
+        displayColors: false,
+        callbacks: {
+          title: (context) => context[0].label,
+          label: (context) => `Score: ${context.raw}`,
         },
       },
     },
@@ -104,8 +131,7 @@ const Graph = () => {
           },
         },
         grid: {
-          color: "rgba(161, 161, 170, 0.1)",
-          borderColor: "rgb(63, 63, 70)",
+          display: false,
         },
         ticks: {
           color: "rgb(161, 161, 170)",
@@ -114,6 +140,10 @@ const Graph = () => {
           },
         },
       },
+    },
+    interaction: {
+      intersect: false,
+      mode: 'nearest',
     },
   };
 
