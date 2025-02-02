@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Timer from "../play-modules/Timer";
-import Scores from "../play-modules/Scores";
+import Scores from "../play-modules/scores";
 import { useNavigate, useLocation } from "react-router-dom";
 import { socket } from "../../../client-socket";
 import { get } from "../../../utilities";
