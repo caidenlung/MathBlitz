@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Questions from "../modules/play-modules/questions";
-import Scores from "../modules/play-modules/Scores";
+import Scores from "../modules/play-modules/scores";
 import Timer from "../modules/play-modules/Timer";
 import FinalScore from "../modules/play-modules/FinalScore";
 import { useNavigate } from "react-router-dom";
