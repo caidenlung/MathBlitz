@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Questions from "../modules/play-modules/Questions";
+import Questions from "../../components/modules/play-modules/Questions";
 import Scores from "../modules/play-modules/Scores";
 import Timer from "../modules/play-modules/Timer";
 import FinalScore from "../modules/play-modules/FinalScore";
