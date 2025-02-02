@@ -20,9 +20,9 @@ const HighScore = () => {
   };
 
   return (
-    <div className="bg-zinc-800/50 rounded-lg p-4 border border-zinc-700">
-      <p className="text-sm font-medium text-zinc-400 mb-1">high score</p>
-      <p className="text-2xl font-mono text-yellow-400">{highScore}</p>
+    <div className="bg-stone-800/50 rounded-lg p-6 border border-stone-700">
+      <p className="text-sm text-stone-400 mb-2">highest score</p>
+      <p className="text-4xl font-mono text-orange-400">{highScore}</p>
     </div>
   );
 };

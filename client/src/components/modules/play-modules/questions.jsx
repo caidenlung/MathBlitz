@@ -67,16 +67,20 @@ const Questions = ({ onCorrectAnswer }) => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-10">
-      <div className="text-6xl font-mono tracking-wider">
-        {currentQuestion?.num1} {currentQuestion?.displayOperation} {currentQuestion?.num2}
+    <div className="flex flex-col items-center space-y-6 sm:space-y-10">
+      <div className="space-y-8">
+        <div className="text-center">
+          <p className="text-4xl sm:text-5xl font-mono text-white">
+            {currentQuestion?.num1} {currentQuestion?.displayOperation} {currentQuestion?.num2}
+          </p>
+        </div>
       </div>
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-sm px-4 sm:px-0">
         <input
           type="number"
           value={userAnswer}
           onChange={handleInputChange}
-          className="w-full bg-zinc-800/50 border border-zinc-700 rounded-lg px-6 py-5 text-4xl font-mono text-center text-zinc-200 focus:outline-none focus:border-emerald-500 transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 sm:px-6 py-4 sm:py-5 text-3xl sm:text-4xl font-mono text-center text-zinc-200 focus:outline-none focus:border-orange-400 transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           autoFocus
         />
       </div>

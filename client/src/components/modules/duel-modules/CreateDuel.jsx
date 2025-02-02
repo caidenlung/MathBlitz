@@ -94,81 +94,86 @@ const CreateDuel = () => {
     }
   };
 
+  const handleBackToHome = () => {
+    navigate("/duel");
+  };
+
   return (
-    <div className="min-h-screen text-zinc-200 flex items-center justify-center">
+    <div className="min-h-screen text-stone-200 flex items-center justify-center">
       <div className="max-w-xl w-full px-6 -mt-20">
-        <div className="text-center space-y-16">
-          <button
-            onClick={() => navigate("/duel")}
-            className="absolute top-4 left-4 px-4 py-2 text-sm font-medium text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded transition-all duration-200"
-          >
-            ← back
-          </button>
-
-          <div className="space-y-5">
-            <h1 className="text-6xl font-mono tracking-tight text-emerald-400">create duel</h1>
-          </div>
-
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <label className="block text-sm font-medium">duel duration (seconds)</label>
-              <input
-                type="number"
-                value={duration}
-                onChange={(e) => setDuration(parseInt(e.target.value) || 0)}
-                className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded text-center text-zinc-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              />
-              <p className="text-xs text-zinc-400">min: 30s, max: 300s</p>
-              {error && <p className="text-sm text-red-400 mt-2">{error}</p>}
+        <div className="relative bg-stone-800/50 rounded-lg border border-stone-700 p-8">
+          <div className="flex flex-col gap-8">
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-mono tracking-tight text-orange-400">create duel</h1>
+              <button
+                onClick={handleBackToHome}
+                className="px-5 py-2.5 text-sm font-medium text-stone-300 hover:text-white border border-stone-700 hover:border-stone-600 rounded transition-all duration-200"
+              >
+                back to home
+              </button>
             </div>
 
-            {!isLobbyCreated ? (
-              <button
-                onClick={handleCreateLobby}
-                className="w-full px-6 py-5 text-sm font-medium text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded transition-all duration-200"
-              >
-                create lobby
-              </button>
-            ) : (
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <p className="text-sm font-medium">lobby code</p>
-                  <div className="text-2xl font-mono tracking-wider text-emerald-400 py-3 px-4 bg-zinc-900 border border-zinc-700 rounded">
-                    {lobbyCode}
-                  </div>
-                  <p className="text-xs text-zinc-400">share this code with your opponent</p>
-                </div>
-
-                <div className="space-y-3">
-                  <p className="text-sm font-medium">players ({players.length}/2)</p>
-                  <div className="space-y-2">
-                    {players.map((player) => (
-                      <div
-                        key={player.id}
-                        className="flex items-center justify-between py-2 px-4 bg-zinc-900 border border-zinc-700 rounded"
-                      >
-                        <span className="text-sm">{player.name}</span>
-                        {player.isHost && <span className="text-xs text-emerald-400">host</span>}
-                      </div>
-                    ))}
-                    {players.length < 2 && (
-                      <div className="py-2 px-4 bg-zinc-900/50 border border-zinc-800 rounded">
-                        <span className="text-sm text-zinc-500">waiting for opponent...</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {players.length === 2 && (
-                  <button
-                    onClick={handleStartGame}
-                    className="w-full px-6 py-5 text-sm font-medium text-emerald-400 hover:text-emerald-300 border border-emerald-900 hover:border-emerald-700 rounded transition-all duration-200"
-                  >
-                    start duel
-                  </button>
-                )}
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <label className="block text-sm font-medium">duel duration (seconds)</label>
+                <input
+                  type="number"
+                  value={duration}
+                  onChange={(e) => setDuration(parseInt(e.target.value) || 0)}
+                  className="w-full px-4 py-3 bg-stone-900 border border-stone-700 rounded text-center text-stone-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                />
+                <p className="text-xs text-stone-400">min: 30s, max: 300s</p>
+                {error && <p className="text-sm text-red-400 mt-2">{error}</p>}
               </div>
-            )}
+
+              {!isLobbyCreated ? (
+                <button
+                  onClick={handleCreateLobby}
+                  className="w-full px-6 py-5 text-sm font-medium text-stone-300 hover:text-white border border-stone-700 hover:border-stone-600 rounded transition-all duration-200"
+                >
+                  create lobby
+                </button>
+              ) : (
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium">lobby code</p>
+                    <div className="text-2xl font-mono tracking-wider text-orange-400 py-3 px-4 bg-stone-900 border border-stone-700 rounded">
+                      {lobbyCode}
+                    </div>
+                    <p className="text-xs text-stone-400">share this code with your opponent</p>
+                  </div>
+
+                  <div className="space-y-3">
+                    <p className="text-sm font-medium">players ({players.length}/2)</p>
+                    <div className="space-y-2">
+                      {players.map((player) => (
+                        <div
+                          key={player.id}
+                          className="flex items-center justify-between py-2 px-4 bg-stone-900 border border-stone-700 rounded"
+                        >
+                          <span className="text-sm">{player.name}</span>
+                          {player.isHost && <span className="text-xs text-orange-400">host</span>}
+                        </div>
+                      ))}
+                      {players.length < 2 && (
+                        <div className="py-2 px-4 bg-stone-900/50 border border-stone-800 rounded">
+                          <span className="text-sm text-stone-500">waiting for opponent...</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {players.length === 2 && (
+                    <button
+                      onClick={handleStartGame}
+                      className="w-full px-6 py-5 text-sm font-medium text-orange-400 hover:text-orange-300 border border-orange-900/50 hover:border-orange-800/50 rounded transition-all duration-200"
+                    >
+                      start duel
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -38,15 +38,15 @@ const Graph = () => {
         label: "Score",
         data: scores,
         fill: false,
-        borderColor: "rgb(52, 211, 153)",
-        backgroundColor: "rgba(52, 211, 153, 0.1)",
+        borderColor: "rgb(251, 146, 60)",
+        backgroundColor: "rgba(251, 146, 60, 0.1)",
         tension: 0.1,
         pointRadius: 5,
         pointHoverRadius: 8,
-        pointBackgroundColor: "rgb(52, 211, 153)",
-        pointHoverBackgroundColor: "rgb(52, 211, 153)",
-        pointBorderColor: "rgb(24, 24, 27)",
-        pointHoverBorderColor: "rgb(24, 24, 27)",
+        pointBackgroundColor: "rgb(251, 146, 60)",
+        pointHoverBackgroundColor: "rgb(251, 146, 60)",
+        pointBorderColor: "rgb(28, 25, 23)",
+        pointHoverBorderColor: "rgb(28, 25, 23)",
         pointBorderWidth: 2,
         pointHoverBorderWidth: 3,
       },
@@ -59,7 +59,7 @@ const Graph = () => {
       legend: {
         position: "top",
         labels: {
-          color: "rgb(161, 161, 170)",
+          color: "rgb(214, 211, 209)",
           font: {
             family: "monospace",
           },
@@ -68,7 +68,7 @@ const Graph = () => {
       title: {
         display: true,
         text: "score history",
-        color: "rgb(161, 161, 170)",
+        color: "rgb(214, 211, 209)",
         font: {
           size: 14,
           family: "monospace",
@@ -76,9 +76,9 @@ const Graph = () => {
         },
       },
       tooltip: {
-        backgroundColor: "rgb(39, 39, 42)",
-        titleColor: "rgb(161, 161, 170)",
-        bodyColor: "rgb(52, 211, 153)",
+        backgroundColor: "rgb(41, 37, 36)",
+        titleColor: "rgb(214, 211, 209)",
+        bodyColor: "rgb(251, 146, 60)",
         titleFont: {
           family: "monospace",
           size: 12,
@@ -103,17 +103,17 @@ const Graph = () => {
         title: {
           display: true,
           text: "scores",
-          color: "rgb(161, 161, 170)",
+          color: "rgb(214, 211, 209)",
           font: {
             family: "monospace",
           },
         },
         grid: {
-          color: "rgba(161, 161, 170, 0.1)",
-          borderColor: "rgb(63, 63, 70)",
+          color: "rgba(214, 211, 209, 0.1)",
+          borderColor: "rgb(68, 64, 60)",
         },
         ticks: {
-          color: "rgb(161, 161, 170)",
+          color: "rgb(214, 211, 209)",
           font: {
             family: "monospace",
           },
@@ -125,7 +125,7 @@ const Graph = () => {
         title: {
           display: true,
           text: "game number",
-          color: "rgb(161, 161, 170)",
+          color: "rgb(214, 211, 209)",
           font: {
             family: "monospace",
           },
@@ -134,7 +134,7 @@ const Graph = () => {
           display: false,
         },
         ticks: {
-          color: "rgb(161, 161, 170)",
+          color: "rgb(214, 211, 209)",
           font: {
             family: "monospace",
           },
@@ -143,7 +143,7 @@ const Graph = () => {
     },
     interaction: {
       intersect: false,
-      mode: 'nearest',
+      mode: "nearest",
     },
   };
 
