@@ -2,9 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../App";
+import NavBar from "../modules/NavBar";
 
 const Home = () => {
-  const { userId, handleLogout } = useContext(UserContext);
+  const { userId } = useContext(UserContext);
   const navigate = useNavigate();
 
   // If not logged in, redirect to login page
@@ -16,6 +17,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen text-zinc-200 flex items-center justify-center">
+      <NavBar />
       <div className="max-w-xl w-full px-6">
         <div className="text-center space-y-16">
           <div className="space-y-5">
@@ -37,25 +39,10 @@ const Home = () => {
               duel
             </button>
             <button
-              onClick={() => navigate("/stats")}
-              className="w-full px-6 py-5 text-sm font-medium text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded transition-all duration-200"
-            >
-              view stats
-            </button>
-            <button
               onClick={() => navigate("/leaderboard")}
               className="w-full px-6 py-5 text-sm font-medium text-yellow-400/80 hover:text-yellow-300 border border-yellow-400/30 hover:border-yellow-400/50 rounded transition-all duration-200"
             >
               view leaderboard
-            </button>
-            <button
-              onClick={() => {
-                handleLogout();
-                navigate("/");
-              }}
-              className="w-full px-6 py-5 text-sm font-medium text-red-400 hover:text-red-300 border border-red-800/50 hover:border-red-700 rounded transition-all duration-200"
-            >
-              logout
             </button>
           </div>
 
