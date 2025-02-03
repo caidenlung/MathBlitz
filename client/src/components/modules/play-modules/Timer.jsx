@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 const Timer = ({ onTimeUp, timeLeft: propTimeLeft }) => {
   const [time, setTime] = useState(propTimeLeft || 120);
   const [isActive, setIsActive] = useState(true);
+  const [startTime, setStartTime] = useState(Date.now());
 
   // Initialize timer when propTimeLeft changes
   useEffect(() => {
     if (propTimeLeft !== undefined) {
       setTime(propTimeLeft);
       setIsActive(true);
+      setStartTime(Date.now());
     }
   }, [propTimeLeft]);
 
@@ -16,19 +18,23 @@ const Timer = ({ onTimeUp, timeLeft: propTimeLeft }) => {
   useEffect(() => {
     let interval = null;
     if (isActive && time > 0) {
+      const endTime = startTime + (propTimeLeft || 120) * 1000;
       interval = setInterval(() => {
-        setTime((prevTime) => {
-          const newTime = prevTime - 1;
-          if (newTime === 0) {
-            setIsActive(false);
-            onTimeUp?.();
-          }
-          return newTime;
-        });
-      }, 1000);
+        const now = Date.now();
+        const remaining = Math.ceil((endTime - now) / 1000);
+        
+        if (remaining <= 0) {
+          setTime(0);
+          setIsActive(false);
+          onTimeUp?.();
+          clearInterval(interval);
+        } else {
+          setTime(remaining);
+        }
+      }, 100);
     }
     return () => clearInterval(interval);
-  }, [isActive, onTimeUp]);
+  }, [isActive, onTimeUp, startTime, propTimeLeft]);
 
   return (
     <div className="bg-zinc-800/50 rounded-lg px-6 sm:px-10 py-3 sm:py-4 border border-zinc-700 min-w-[120px] sm:min-w-[160px]">
